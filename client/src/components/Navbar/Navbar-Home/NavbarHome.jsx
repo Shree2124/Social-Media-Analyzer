@@ -42,11 +42,14 @@ const NavbarHome = () => {
                     <a
                       key={item.text}
                       href={item.link}
-                      className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-medium"
+                      className="relative text-gray-700 dark:text-gray-300 font-medium transition-colors duration-200 hover:text-blue-600 dark:hover:text-blue-400 after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-blue-600 dark:after:bg-blue-400 after:transition-all after:duration-300 hover:after:w-full"
                     >
                       {item.text}
                     </a>
                   ))}
+                  <div className="flex items-center">
+                    <ThemeToggleButton />
+                  </div>
                 </div>
               </nav>
             </>
@@ -70,10 +73,6 @@ const NavbarHome = () => {
               </IconButton>
             </>
           )}
-
-          <div className="flex items-center">
-            <ThemeToggleButton />
-          </div>
 
           {/* Drawer / Sidebar */}
           <Drawer
@@ -182,6 +181,9 @@ const NavbarHome = () => {
                   ))}
                 </List>
               </Box>
+              <div className="p-5 flex items-center">
+                <ThemeToggleButton />
+              </div>
             </Box>
           </Drawer>
         </div>

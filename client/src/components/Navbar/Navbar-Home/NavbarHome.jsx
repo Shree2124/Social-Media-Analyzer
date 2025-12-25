@@ -6,6 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import { Menu, X } from "lucide-react";
 import { Drawer, Box, ListItemText, ListItem, List } from "@mui/material";
 import { useAppSelector } from "../../../store/hooks";
+import { AvatarLogo } from "../../../utils";
 
 const NavbarHome = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -49,6 +50,12 @@ const NavbarHome = () => {
                   ))}
                   <div className="flex items-center">
                     <ThemeToggleButton />
+                  </div>
+                  <div className="">
+                    <AvatarLogo
+                      name="Shree Alasande"
+                      src="https://i.pravatar.cc/300"
+                    />
                   </div>
                 </div>
               </nav>
@@ -181,8 +188,15 @@ const NavbarHome = () => {
                   ))}
                 </List>
               </Box>
-              <div className="p-5 flex items-center">
+              <div className="pl-5 py-3 flex items-center">
                 <ThemeToggleButton />
+              </div>
+              <div className="h-[0.5px] w-[initial] bg-gray-500 mx-5"></div>
+              <div className="pl-5 py-3 flex items-center">
+                <AvatarLogo
+                  name="Shree Alasande"
+                  src="https://i.pravatar.cc/300"
+                />
               </div>
             </Box>
           </Drawer>

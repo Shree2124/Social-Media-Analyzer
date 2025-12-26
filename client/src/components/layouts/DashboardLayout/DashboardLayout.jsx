@@ -1,8 +1,35 @@
-import { useTheme } from "@mui/material";
-import { Home } from "lucide-react";
-import React from "react";
+import {
+  Box,
+  Stack,
+  Typography,
+  Button,
+  Collapse,
+  IconButton,
+  Drawer,
+  useTheme,
+  AppBar,
+  Toolbar,
+  Avatar,
+  Menu,
+  MenuItem,
+  Divider,
+  useMediaQuery,
+} from "@mui/material";
+import {
+  Menu as MenuIcon,
+  Home,
+  ArrowDropDown,
+  ArrowBack,
+  Logout,
+  Person,
+} from "@mui/icons-material";
+
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../../store/hooks";
+import { useCurrentUser } from "../../../hooks/index";
+import { AvatarLogo } from "../../../utils";
 
 const navTabs = [{ name: "Home", path: "/dashboard", icon: <Home /> }];
 
@@ -44,7 +71,7 @@ const SideBar = ({ w, handleDrawerToggle }) => {
         }}
       >
         <img
-          src={weChangeLogo}
+          // src={weChangeLogo}
           alt="weCHANGE Logo"
           style={{
             height: "100%",
@@ -208,7 +235,7 @@ const DashboardLayout = ({ children }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const admin = useCurrentAdmin();
+  const user = useCurrentUser();
   const [anchorEl, setAnchorEl] = useState(null);
   const dispatch = useDispatch();
   const [loading, _] = useState(false);
@@ -230,7 +257,7 @@ const DashboardLayout = ({ children }) => {
 
   const handleLogout = async () => {
     try {
-      const response = await api.post("/admin/logout");
+      const response = await api.post("/user/logout");
 
       if (response) {
         dispatch(setAuth(false));
@@ -308,21 +335,21 @@ const DashboardLayout = ({ children }) => {
               }}
             >
               <Typography variant="body2" fontWeight={600}>
-                {loading ? "Loading..." : admin?.name || "Admin User"}
+                {loading ? "Loading..." : user?.name || "user User"}
               </Typography>
               <Typography variant="caption" color="text.secondary">
-                {loading ? "..." : admin?.email || "admin@example.com"}
+                {loading ? "..." : user?.email || "user@example.com"}
               </Typography>
             </Box>
-            <Avatar
+            {/* <AvatarLogo
               sx={{
                 bgcolor: "#ff8f07",
                 color: "#ffffff",
                 fontWeight: "bold",
               }}
             >
-              {admin?.name ? getInitials(admin.name) : "A"}
-            </Avatar>
+              {user?.name ? getInitials(user.name) : "A"}
+            </AvatarLogo> */}
           </Box>
 
           {/* Profile Menu */}
@@ -344,10 +371,10 @@ const DashboardLayout = ({ children }) => {
           >
             <Box sx={{ p: 2, bgcolor: "#ff8f07", color: "white" }}>
               <Typography variant="subtitle1" fontWeight={600}>
-                {admin?.name || "Admin User"}
+                {user?.name || "user User"}
               </Typography>
               <Typography variant="caption" sx={{ opacity: 0.9 }}>
-                {admin?.email || "admin@example.com"}
+                {user?.email || "user@example.com"}
               </Typography>
             </Box>
             <MenuItem onClick={handleProfileClick}>

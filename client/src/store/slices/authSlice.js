@@ -1,11 +1,11 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { api } from "../../api/Axios/axios.js";
 import { toast } from "react-hot-toast";
 
 const initialState = {
-  auth: false,
+  auth: true,
   user: null,
-  loading: true,
+  loading: false,
   error: null,
 };
 

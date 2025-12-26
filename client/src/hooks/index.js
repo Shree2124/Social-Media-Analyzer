@@ -1,5 +1,7 @@
 import useTheme from "./useTheme";
+import useCurrentUser from "./useCurrentUser"
 
-return {
-    useTheme
+export {
+    useTheme,
+    useCurrentUser
 }

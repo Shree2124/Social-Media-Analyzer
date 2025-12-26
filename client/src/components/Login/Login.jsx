@@ -6,11 +6,17 @@ import {
   faXTwitter,
 } from "@fortawesome/free-brands-svg-icons";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Input } from "../../utils/index.js";
 import { Button, SocialButton } from "../index.js";
+import { api } from "../../api/Axios/axios.js";
+import { login } from "../../api/routes/auth/auth.routes.js";
+import toast from "react-hot-toast";
+import { fetchUser, loginUser } from "../../store/slices/authSlice.js";
 
 const Login = () => {
+  const navigate = useNavigate()
+
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({ email: "", password: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -56,7 +62,7 @@ const Login = () => {
     setErrors((prev) => ({ ...prev, [name]: message }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async(event) => {
     event.preventDefault();
     const validationErrors = validate();
 
@@ -66,11 +72,20 @@ const Login = () => {
     }
 
     setIsSubmitting(true);
-    // Simulate async login request
-    setTimeout(() => {
-      console.log("Logging in with", formData);
-      setIsSubmitting(false);
-    }, 800);
+    try {
+      const res = await loginUser(formData)
+      console.log(res.data)
+      if(res.data.statusCode === 200){
+        setIsSubmitting(false)
+        toast.success("Welcome Back!")
+        await fetchUser()
+        navigate("/dashboard")
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error("Register failed please try again!")
+    }
+    setIsSubmitting(false)
   };
 
   const handleSocialLogin = (provider) => {

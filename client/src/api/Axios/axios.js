@@ -14,32 +14,28 @@ export const setUnauthorizedCallback = (callback) => {
 };
 
 api.interceptors.request.use(
-  (config) => {
-    return config;
-  },
+  (config) => config,
   (error) => Promise.reject(error)
 );
 
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const originalRequest =
-      error.config &
-      {
-        _retry,
-      };
+    const originalRequest = error.config;
 
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       try {
-        await api.post("");
+        // call refresh-token API
+        await api.post("/auth/refresh"); 
         return api(originalRequest);
-      } catch (error) {
+      } catch (refreshError) {
         unauthorizedCallback();
         return Promise.reject(refreshError);
       }
     }
+
     return Promise.reject(error);
   }
 );

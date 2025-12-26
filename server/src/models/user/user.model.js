@@ -10,9 +10,17 @@ import {
 
 const UserSchema = new Schema(
   {
-    name: {
+    username: {
       type: String,
       required: true,
+      unique: true,
+    },
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
+      type: String,
     },
     email: {
       type: String,
@@ -30,10 +38,10 @@ const UserSchema = new Schema(
   { timestamps: true }
 );
 
-UserSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
+UserSchema.pre("save", async function () {
+  if (!this.isModified("password")) return;
+
   this.password = await bcrypt.hash(this.password, 10);
-  next();
 });
 
 UserSchema.methods.isPasswordCorrect = async function (password) {

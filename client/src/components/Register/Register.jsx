@@ -6,10 +6,13 @@ import {
   faXTwitter,
 } from "@fortawesome/free-brands-svg-icons";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Input } from "../../utils/index.js";
 import { Button, SocialButton } from "../index.js";
 import { Eye, EyeOff } from "lucide-react";
+import { api } from "../../api/Axios/axios.js";
+import { register } from "../../api/routes/auth/auth.routes.js";
+import toast from "react-hot-toast";
 
 const initialState = {
   username: "",
@@ -21,6 +24,8 @@ const initialState = {
 };
 
 const Register = () => {
+  const navigate = useNavigate()
+
   const [formData, setFormData] = useState(initialState);
   const [errors, setErrors] = useState(
     Object.keys(initialState).reduce((acc, key) => ({ ...acc, [key]: "" }), {})
@@ -28,6 +33,7 @@ const Register = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -99,7 +105,7 @@ const Register = () => {
     return nextErrors;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const validationErrors = validate();
 
@@ -109,10 +115,20 @@ const Register = () => {
     }
 
     setIsSubmitting(true);
-    setTimeout(() => {
-      console.log("Registering user", formData);
-      setIsSubmitting(false);
-    }, 1000);
+    try {
+      const res = await api.post(register,formData)
+      console.log(res.data)
+      if(res.data.statusCode === 201){
+        setIsSubmitting(false)
+        toast.success("Register successfully! wait your redirecting to login")
+        navigate("/login")
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error("Register failed please try again!")
+    }
+
+    setIsSubmitting(false)
   };
 
   const handleSocialLogin = (provider) => {

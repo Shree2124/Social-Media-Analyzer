@@ -5,6 +5,9 @@ import Login from "./Login/Login"
 import Register from "./Register/Register"
 import Button from "./buttons/Button/Button";
 import SocialButton from "./buttons/SocialButton/SocialButton";
+import AuthLayout from "./layouts/AuthLayout/AuthLayout";
+import DashboardLayout from "./layouts/DashboardLayout/DashboardLayout";
+import DashboardHome from "./Dashboard/Home/DashboardHome";
 
 export {
     NavbarHome,
@@ -13,5 +16,8 @@ export {
     Login,
     Register,
     Button,
-    SocialButton
+    SocialButton,
+    AuthLayout,
+    DashboardLayout,
+    DashboardHome
 }

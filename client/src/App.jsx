@@ -1,4 +1,11 @@
-import { Header, HeroSection, Login, Register } from "./components";
+import {
+  Header,
+  HeroSection,
+  Login,
+  Register,
+  AuthLayout,
+  DashboardLayout,
+} from "./components";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
@@ -9,6 +16,7 @@ function App() {
     <div className="h-full bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
       <BrowserRouter>
         <Routes>
+          {/* Home */}
           <Route
             path="/"
             element={
@@ -20,6 +28,8 @@ function App() {
               </>
             }
           />
+
+          {/* Login */}
           <Route
             path="/login"
             element={
@@ -30,6 +40,7 @@ function App() {
             }
           />
 
+          {/* Register */}
           <Route
             path="/register"
             element={
@@ -37,6 +48,20 @@ function App() {
                 <Header />
                 <Register />
               </main>
+            }
+          />
+
+          {/* Dashboard */}
+          <Route
+            path="/dashboard/*"
+            element={
+              <AuthLayout>
+                <DashboardLayout>
+                  <Routes>
+                    <Route path="/" element={<DashboardHomePage />} />
+                  </Routes>
+                </DashboardLayout>
+              </AuthLayout>
             }
           />
         </Routes>

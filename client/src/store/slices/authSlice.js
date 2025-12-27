@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { api } from "../../api/Axios/axios.js";
 import { toast } from "react-hot-toast";
+import { login } from "../../api/routes/auth/auth.routes.js";
 
 const initialState = {
   auth: true,
@@ -12,7 +13,7 @@ const initialState = {
 // Login
 export const loginUser = createAsyncThunk("login", async (data) => {
   try {
-    const response = await api.post("", data); // Login
+    const response = await api.post(login, data); // Login
     toast.success("Login Successfully!");
     return response.data?.data;
   } catch (error) {

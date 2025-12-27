@@ -228,7 +228,7 @@ const Register = () => {
           }}
         >
           <Input
-            className="bg-white dark:bg-gray-900 shadow-md"
+            className="bg-white dark:bg-gray-900 shadow-md dark:text-white"
             label="First Name"
             type="text"
             name="firstName"
@@ -241,7 +241,7 @@ const Register = () => {
           />
 
           <Input
-            className="bg-white dark:bg-gray-900 shadow-md"
+            className="bg-white dark:bg-gray-900 shadow-md dark:text-white"
             label="Last Name"
             type="text"
             name="lastName"
@@ -255,7 +255,7 @@ const Register = () => {
         </div>
 
         <Input
-          className="bg-white dark:bg-gray-900 shadow-md"
+          className="bg-white dark:bg-gray-900 shadow-md dark:text-white"
           label="Username"
           type="text"
           name="username"
@@ -268,7 +268,7 @@ const Register = () => {
         />
 
         <Input
-          className="bg-white dark:bg-gray-900 shadow-md"
+          className="bg-white dark:bg-gray-900 shadow-md dark:text-white"
           label="Email address"
           type="email"
           name="email"
@@ -281,7 +281,7 @@ const Register = () => {
         />
 
         <Input
-          className="bg-white dark:bg-gray-900 shadow-md"
+          className="bg-white dark:bg-gray-900 shadow-md dark:text-white"
           label="Password"
           type={showPassword ? "text" : "password"}
           name="password"
@@ -312,7 +312,7 @@ const Register = () => {
         />
 
         <Input
-          className="bg-white dark:bg-gray-900 shadow-md"
+          className="bg-white dark:bg-gray-900 shadow-md dark:text-white"
           label="Confirm Password"
           type={showConfirmPassword ? "text" : "password"}
           name="confirmPassword"

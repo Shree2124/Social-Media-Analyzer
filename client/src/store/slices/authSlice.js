@@ -13,6 +13,7 @@ const initialState = {
 // Login
 export const loginUser = createAsyncThunk("login", async (data) => {
   try {
+    console.log(data)
     const response = await api.post(login, data); // Login
     toast.success("Login Successfully!");
     return response.data?.data;

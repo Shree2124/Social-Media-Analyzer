@@ -9,13 +9,13 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import { Input } from "../../utils/index.js";
 import { Button, SocialButton } from "../index.js";
-import { api } from "../../api/Axios/axios.js";
-import { login } from "../../api/routes/auth/auth.routes.js";
 import toast from "react-hot-toast";
 import { fetchUser, loginUser } from "../../store/slices/authSlice.js";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({ email: "", password: "" });
@@ -65,6 +65,8 @@ const Login = () => {
   const handleSubmit = async(event) => {
     event.preventDefault();
     const validationErrors = validate();
+    
+    console.log(validationErrors)
 
     if (Object.keys(validationErrors).length) {
       setErrors(validationErrors);
@@ -73,17 +75,17 @@ const Login = () => {
 
     setIsSubmitting(true);
     try {
-      const res = await loginUser(formData)
-      console.log(res.data)
-      if(res?.data?.statusCode === 200){
+      const res = await dispatch(loginUser(formData)).unwrap();
+      console.log(res)
+      if(res?.user){
         setIsSubmitting(false)
         toast.success("Welcome Back!")
-        await fetchUser()
+        // await dispatch(fetchUser()).unwrap();
         navigate("/dashboard")
       }
     } catch (error) {
       console.log(error)
-      toast.error("Register failed please try again!")
+      toast.error("Login failed please try again!")
     }
     setIsSubmitting(false)
   };
@@ -175,7 +177,7 @@ const Login = () => {
         </div>
 
         <Input
-          className="bg-white dark:bg-gray-900 shadow-md"
+          className="bg-white dark:bg-gray-900 shadow-md dark:text-white"
           label="Email address"
           type="email"
           name="email"
@@ -188,7 +190,7 @@ const Login = () => {
         />
 
         <Input
-          className="bg-white dark:bg-gray-900 shadow-lg"
+          className="bg-white dark:bg-gray-900 shadow-md dark:text-white"
           label="Password"
           type={showPassword ? "text" : "password"}
           name="password"

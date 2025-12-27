@@ -75,7 +75,7 @@ const Login = () => {
     try {
       const res = await loginUser(formData)
       console.log(res.data)
-      if(res.data.statusCode === 200){
+      if(res?.data?.statusCode === 200){
         setIsSubmitting(false)
         toast.success("Welcome Back!")
         await fetchUser()
